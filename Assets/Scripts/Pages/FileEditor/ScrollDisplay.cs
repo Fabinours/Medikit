@@ -21,6 +21,7 @@ public class ScrollDisplay : MonoBehaviour
 
     public void addContent()
     {
-        Instantiate(model,model.transform.position,model.transform.rotation,transform);
+        GameObject newInstance=Instantiate(model,model.transform.position,model.transform.rotation,transform);
+        newInstance.SetActive(true);
     }
 }
