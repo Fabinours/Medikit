@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class DBConnection : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+
+    public void Initialize()//call by ApplicationManager
     {
         // A correct website page.
         StartCoroutine(GetRequest("https://www.example.com"));
@@ -36,7 +39,8 @@ public class DBConnection : MonoBehaviour
 
         // Update is called once per frame
         void Update()
-    {
-        
+        {
+
+        }
     }
 }

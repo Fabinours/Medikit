@@ -14,7 +14,7 @@ public class ApplicationManager : MonoBehaviour
     {
         GameObject.FindObjectOfType<ModuleManager>().Initialize();
         //Todo
-        //GameObject.FindObjectOfType<DatabaseManager>().Initialize();
+        GameObject.FindObjectOfType<DBConnection>().Initialize();
         //GameObject.FindObjectOfType<Translation>().Initialize();
     }
 }
