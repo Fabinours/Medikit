@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrouillonsScript : MonoBehaviour
+public class BrouillonsScript : BaseModule
 {
 
     

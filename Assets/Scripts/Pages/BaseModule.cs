@@ -29,6 +29,7 @@ public abstract class BaseModule : MonoBehaviour
 
     public void Back()
     {
+        if(currentPage != null)
         currentPage.SetActive(false);
 
         if (lastPages.Count == 0)
