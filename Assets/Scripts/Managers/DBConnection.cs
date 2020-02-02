@@ -17,6 +17,14 @@ public class DBConnection : MonoBehaviour
         StartCoroutine(GetRequest("https://error.html"));
     }
 
+    
+    public void Request()
+    {
+
+    }
+
+
+
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))

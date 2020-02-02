@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +13,21 @@ public class MenuBar : MonoBehaviour
     [SerializeField]
     Transform buttonList;
     [SerializeField]
-    Transform destination;
+    InputField searchBarText;
 
+    [SerializeField]
+    Transform destination;
+    [SerializeField]
+    GameObject buttonPref;
+    Text buttonPrefText;
+    [SerializeField]
+    Transform patientListParent;
+
+    List<Patient> storedPatients = new List<Patient>();
 
     private void Awake()
     {
+        buttonPrefText = buttonPref.GetComponentInChildren<Text>();
         child = transform.GetChild(0).gameObject;
     }
 
@@ -50,4 +62,78 @@ public class MenuBar : MonoBehaviour
             }
         }
     }
+
+    public void UpdatePatientList()//TODO
+    {
+        ClearBar_();
+
+        if (searchBarText.text.Length < 2)
+            return;
+
+        //  DBConnection.Request(searchBarText.text);
+        UpdatePatientList_Success(null);
+    }
+
+    void UpdatePatientList_Success(JObject result)//TODO
+    {
+        GameObject gb;
+
+        //recuperation de Result et remplissage de la liste
+        storedPatients.Add(new Patient("bud", "leTurk"));
+        storedPatients.Add(new Patient("davy", "leBoss♥"));
+        storedPatients.Add(new Patient("fabien", "curtiss"));
+        storedPatients.Add(new Patient("thomas", "lepetittrain"));
+        storedPatients.Add(new Patient("maya", "alx cendres"));
+
+
+        foreach (var p in storedPatients)
+        {
+            buttonPrefText.text = p.FirstName + " " + p.Name;
+            gb = GameObject.Instantiate(buttonPref, patientListParent);
+            gb.SetActive(true);
+            gb.name = p.Uuid;
+        }
+
+    }
+    public void ClearBar()//code de boucher. pas le temps pour faire dans la dentelle
+    {
+       Invoke("ClearBar_", 0.2f);
+    }
+
+        void ClearBar_()
+    {
+        foreach (Transform g in patientListParent)        
+            Destroy(g.gameObject);
+        storedPatients.Clear();
+    }
+
+        public void SelectPatient(Button b)//TODO
+    {
+        //   DBConnection.Resquste( selectPateitn, b.name, SelectPatient_success, SelectPatient_fail)
+        //Pour gagner du temps :
+        Patient patient = storedPatients.First(p => p.Uuid == b.name);
+       ModuleManager.Instance.SetSelectedPatient(patient);
+        searchBarText.text = patient.FirstName + " " + patient.Name;
+        ClearBar_();
+    }
+
+
+    /*
+    public void SelectPatient_fail(string why)
+    {
+        Popup.Log("An error as occured with the database :"+why);
+    }
+
+    public void SelectPatient_success(JObject result)
+    {
+        Popup.Log("An error as occured with the database :" + why);
+    }
+    */
+
+    public void SetSelectedPatient(String id)
+    {
+
+    }
+
+
 }

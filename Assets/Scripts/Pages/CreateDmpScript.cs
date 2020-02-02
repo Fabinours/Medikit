@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +55,11 @@ public class CreateDmpScript : BaseModule
         dmp.Add("email", email.text);
         dmp.Add("adr", adresse.text);
         print(dmp);
+
+      //  DMP dd = JsonUtility.FromJson<DMP>(dmp.ToString());
     }
-    
+
+
+
 
 }

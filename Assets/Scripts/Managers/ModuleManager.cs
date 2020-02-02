@@ -12,7 +12,7 @@ public class ModuleManager : MonoBehaviour
     private List<BaseModule> lastPages = new List<BaseModule>();
     private BaseModule currentActiveModule;
 
-
+    private Patient currentSelectedPatient = null;
 
     [SerializeField]
     private MainPage mainPage;
@@ -59,17 +59,18 @@ public class ModuleManager : MonoBehaviour
     }
 
 
-    public void SetSelectedPatient(string id)
+    public void SetSelectedPatient(Patient patient)
     {
-        Debug.LogWarning("TODO SetSelectedPatient - need database");
+      //  Debug.LogWarning("TODO SetSelectedPatient - need database");
+        currentSelectedPatient = patient;
     }
 
 
 
-    public Object GetSelectedPatient()
+    public Patient GetSelectedPatient()
  {
         Debug.LogWarning("TODO GetSelectedPatient - need database");
-        return null;
+        return currentSelectedPatient;
  }
  
 }
