@@ -21,8 +21,12 @@ public class DatePickerCall : MonoBehaviour
     void Awake()
     {
         input = GetComponentInChildren<InputField>();
+    }
+    private void OnEnable()
+    {
         input.text = defaultYear + "/" + defaultMonth + "/" + defaultDay;
     }
+
 
     public void OnClick()
     {
