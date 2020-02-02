@@ -7,13 +7,18 @@ using UnityEngine.Networking;
 public class DBConnection : MonoBehaviour
 {
 
-    void Start()
+    public void Initialize()
     {
 
     }
 
-    public void Initialize(String fileName, Boolean isDownload)
+
+
+#if false
+
+    public void Request(String fileName, Boolean isDownload)
     {
+
         if (isDownload)
         {
             StartCoroutine(GetFile("http://http://83.114.62.157/Medikit/" + "fileName"));
@@ -34,7 +39,8 @@ public class DBConnection : MonoBehaviour
 
     IEnumerator GetFile(string uri)
     {
-        using (UnityWebRequest request = UnityWebRequest(uri, "GET", "new downloadHandler, Networking.UploadHandler uploadHandler")
+
+        using (UnityWebRequest request = UnityWebRequest(uri, "GET", "new downloadHandler, Networking.UploadHandler uploadHandler"))  ;
         {
             yield return request.Send();
 
@@ -56,4 +62,7 @@ public class DBConnection : MonoBehaviour
     {
 
     }
+
+#endif
+
 }
