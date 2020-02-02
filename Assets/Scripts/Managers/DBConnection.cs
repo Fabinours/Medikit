@@ -25,8 +25,7 @@ public class DBConnection : MonoBehaviour
         } else
         {
             StartCoroutine(UploadFile(fileName));
-        }
-        
+        }        
     }
 
     
