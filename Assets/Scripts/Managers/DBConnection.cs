@@ -7,14 +7,21 @@ using UnityEngine.Networking;
 public class DBConnection : MonoBehaviour
 {
 
-
-    public void Initialize()//call by ApplicationManager
+    void Start()
     {
-        // A correct website page.
-        StartCoroutine(GetRequest("https://www.example.com"));
 
-        // A non-existing page.
-        StartCoroutine(GetRequest("https://error.html"));
+    }
+
+    public void Initialize(String fileName, Boolean isDownload)
+    {
+        if (isDownload)
+        {
+            StartCoroutine(GetFile("http://http://83.114.62.157/Medikit/" + "fileName"));
+        } else
+        {
+            StartCoroutine(UploadFile(fileName));
+        }
+        
     }
 
     
@@ -25,30 +32,28 @@ public class DBConnection : MonoBehaviour
 
 
 
-    IEnumerator GetRequest(string uri)
+    IEnumerator GetFile(string uri)
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        using (UnityWebRequest request = UnityWebRequest(uri, "GET", "new downloadHandler, Networking.UploadHandler uploadHandler")
         {
-            // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest();
+            yield return request.Send();
 
-            string[] pages = uri.Split('/');
-            int page = pages.Length - 1;
-
-            if (webRequest.isNetworkError)
+            if (request.isError) // Error
             {
-                Debug.Log(pages[page] + ": Error: " + webRequest.error);
+                Debug.Log(request.error);
             }
-            else
+            else // Success
             {
-                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                Debug.Log(request.downloadHandler.text);
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
 
-        }
+    }
+
+
+    IEnumerator UploadFile(string pathToFile)
+    {
+
     }
 }
