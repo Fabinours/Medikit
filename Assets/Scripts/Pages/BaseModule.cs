@@ -9,7 +9,7 @@ public abstract class BaseModule : MonoBehaviour
     private GameObject defaultPage;
 
     private Stack<GameObject> lastPages = new Stack<GameObject>();
-    private GameObject currentPage;
+    protected GameObject currentPage;
 
 
 
