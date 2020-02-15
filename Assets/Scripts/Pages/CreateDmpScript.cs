@@ -36,7 +36,7 @@ public class CreateDmpScript : BaseModule
 
     public override void OnOpen()
     {
-        uuid.text = System.Convert.ToBase64String(new byte[] {1,2,3,4 });
+        //uuid.text = System.Convert.ToBase64String(new byte[] {1,2,3,4 });
         base.OnOpen();
     }
 
