@@ -1,14 +1,61 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class DBConnection : MonoBehaviour
 {
+   static DBConnection instance;
 
     public void Initialize()
     {
+        instance = this;
+    }
+
+
+    public static void Request(String SqlRequest, Action<JToken> onSuccess, Action<string> onFail)
+    {
+        instance.StartCoroutine(instance.GetRequest("http://83.199.224.35/?req=" + SqlRequest, onSuccess, onFail));
+
+    }
+    
+
+    IEnumerator GetRequest(String httpRequest, Action<JToken> onSuccess, Action<string> onFail) { 
+
+        UnityWebRequest uwr = UnityWebRequest.Get(httpRequest.Replace(" ", "%20"));
+        Debug.Log("sending request "+httpRequest);
+        yield return uwr.SendWebRequest();
+
+
+        if (uwr.isNetworkError)
+        {
+            Debug.Log("Error While Sending: " + uwr.error);
+            onFail(uwr.error);
+        }
+        else
+        {
+            string result = null;
+
+            try
+            {
+                // result = uwr.downloadHandler.text;
+                // result = Regex.Replace(uwr.downloadHandler.text, "\\[([\\s\\S]*?)\\]", "{Main: [$1]}");
+                result = "{ Main: " + uwr.downloadHandler.text + "}";
+                Debug.Log("Received: " + result);
+                // JObject o = new JObject(result);
+                JToken o = JObject.Parse(result)["Main"];
+                onSuccess(o);
+            }
+            catch(Exception e)
+            {
+                Debug.LogError(e);
+                onFail("Html error:"+ result);
+            }
+           // onSuccess(uwr.downloadHandler.text);
+        }
 
     }
 
@@ -64,4 +111,4 @@ public class DBConnection : MonoBehaviour
 
 #endif
 
-}
+    }

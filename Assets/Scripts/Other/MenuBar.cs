@@ -70,20 +70,38 @@ public class MenuBar : MonoBehaviour
         if (searchBarText.text.Length < 2)
             return;
 
+        //searchBarText.text
+        DBConnection.Request("SELECT * FROM `Membre` WHERE nom LIKE \"%\" or prenom LIKE \"%\"", UpdatePatientList_Success, UpdatePatientList_Fail);
+
         //  DBConnection.Request(searchBarText.text);
-        UpdatePatientList_Success(null);
+        // UpdatePatientList_Success(null);
     }
 
-    void UpdatePatientList_Success(JObject result)//TODO
+    void UpdatePatientList_Fail(string error)//TODO
+    {
+        Popup.Log("Menu bar error :" +error);
+    }
+        void UpdatePatientList_Success(JToken result)//TODO
     {
         GameObject gb;
 
         //recuperation de Result et remplissage de la liste
+        /*
         storedPatients.Add(new Patient("bud", "leTurk"));
         storedPatients.Add(new Patient("davy", "leBoss♥"));
         storedPatients.Add(new Patient("fabien", "curtiss"));
         storedPatients.Add(new Patient("thomas", "lepetittrain"));
         storedPatients.Add(new Patient("maya", "alx cendres"));
+        */
+
+        foreach(var obj in result)
+        {
+
+            Debug.LogError(obj.ToString());
+            storedPatients.Add(JsonUtility.FromJson<Patient>(obj.ToString()));
+
+        }
+
 
 
         foreach (var p in storedPatients)
