@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,11 +44,11 @@ public class DBConnection : MonoBehaviour
             {
                 // result = uwr.downloadHandler.text;
                 // result = Regex.Replace(uwr.downloadHandler.text, "\\[([\\s\\S]*?)\\]", "{Main: [$1]}");
-                result = "{ Main: " + uwr.downloadHandler.text + "}";
-                Debug.Log("Received: " + result);
+                result = "{ \"Main\": " + uwr.downloadHandler.text + "}";
                 // JObject o = new JObject(result);
                 JToken o = JObject.Parse(result)["Main"];
-                onSuccess(o);
+                Debug.Log("Received: " + o.ToString());
+                 onSuccess(o);
             }
             catch(Exception e)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class UserInfoScript : MonoBehaviour
 
     UserInfo currentUser;
 
+    private const string keySaveSession = "last_session";
 
     private void Awake()
     {
@@ -18,28 +20,52 @@ public class UserInfoScript : MonoBehaviour
 
     public void TryRegister(string id, string pwd, Action callbackSuccess, Action<string> callbackFail)
     {
-        //todo : call bdd et rempli un UserInfo avec le resultat. Appeler la bonne fonction selon le retour (erreur ou pas)
 
-        currentUser = new UserInfo("Bob", UserRole.Infirmier);
+        DBConnection.Request("SELECT * FROM `Membre` WHERE mdp like \"" + pwd + "\" and id like \"" + id+"\"",
+            (result) =>
+        {
+            string val = result.First.ToString();
+            PlayerPrefs.SetString(keySaveSession, val);
 
-       // callbackSuccess();
 
-        callbackFail("Error !");
+            currentUser = JsonUtility.FromJson<UserInfo>(val);
+            callbackSuccess();
+        }, callbackFail);
+
+
     }
 
     public void RegisterLastSession(Action callbackSuccess, Action callbackFail)
     {
         //todo : essaie de se connecter a la dernier session et appelle callbackSuccess si réussi, sinon callbackFail
-        currentUser = new UserInfo("Bob", UserRole.Infirmier);
+        // currentUser = new UserInfo("Bob", UserRole.Infirmier);
+        //callbackSuccess();
 
+        if (PlayerPrefs.HasKey(keySaveSession))
+        {
+            try
+            {
+                currentUser = JsonUtility.FromJson<UserInfo>(PlayerPrefs.GetString(keySaveSession));
+            }catch(Exception e)
+            {
+                Debug.Log("Last session not found");
+                currentUser = null;
+            }
 
+        }
+            
+   if(currentUser == null)
+        callbackFail();
+   else
         callbackSuccess();
-        //callbackFail();
+
 
     }
 
     public void Logout()
     {
+        PlayerPrefs.DeleteKey(keySaveSession);
+
         currentUser = null;
         //todo : suprrimer les info de derniere connexion
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,7 +46,7 @@ public class MainPage : BaseModule
         menuBar = GameObject.FindObjectOfType<MenuBar>();
     }
 
-    public void OpenConnetPannel()
+    public void OpenConectPanel()
     {
         UserInfoScript.Instance.RegisterLastSession(RegisterLastSession_Success, RegisterLastSession_Fail);
     }
@@ -58,7 +59,10 @@ public class MainPage : BaseModule
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)//si il y a de la coo
             OpenPage(connexionPage);
-
+        else
+        {
+            Popup.Log("Il n'y a pas de connexion internet et vous ne vous êtes jamais connecté à la plateforme.");
+        }
     }
 
 
@@ -72,9 +76,8 @@ public class MainPage : BaseModule
     
 
     void ClickRegister_fail(string why)
-    {
-   
-        Popup.Log("Register error :" +why);
+    {   
+        Popup.Log("Vos identifiants sont incorrectes.");
     }
        
 

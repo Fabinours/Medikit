@@ -71,7 +71,7 @@ public class MenuBar : MonoBehaviour
             return;
 
         //searchBarText.text
-        DBConnection.Request("SELECT * FROM `Membre` WHERE nom LIKE \"%\" or prenom LIKE \"%\"", UpdatePatientList_Success, UpdatePatientList_Fail);
+        DBConnection.Request("SELECT * FROM `DMP` WHERE nom LIKE \"%"+ searchBarText.text + "%\" or prenom LIKE \"%" + searchBarText.text + "%\"", UpdatePatientList_Success, UpdatePatientList_Fail);
 
         //  DBConnection.Request(searchBarText.text);
         // UpdatePatientList_Success(null);
@@ -85,21 +85,16 @@ public class MenuBar : MonoBehaviour
     {
         GameObject gb;
 
-        //recuperation de Result et remplissage de la liste
-        /*
-        storedPatients.Add(new Patient("bud", "leTurk"));
-        storedPatients.Add(new Patient("davy", "leBoss♥"));
-        storedPatients.Add(new Patient("fabien", "curtiss"));
-        storedPatients.Add(new Patient("thomas", "lepetittrain"));
-        storedPatients.Add(new Patient("maya", "alx cendres"));
-        */
 
-        foreach(var obj in result)
+       // Patient pp = new Patient("maya", "alx cendres");
+       // Debug.Log(JsonUtility.ToJson(pp) );
+
+
+        foreach (var obj in result)
         {
-
-            Debug.LogError(obj.ToString());
             storedPatients.Add(JsonUtility.FromJson<Patient>(obj.ToString()));
-
+            Debug.Log(JsonUtility.ToJson(
+            storedPatients[storedPatients.Count - 1]));
         }
 
 

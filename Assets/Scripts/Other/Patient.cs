@@ -3,42 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using UnityEngine;
 
 public class Patient//representation d'un patient
 {
-
-  
-    string code;
-    string id;
-    string mdp;
-    string nom;
-    string prenom;
-    string tel;    
-    string dateN;
-    string mail;
-    string adresse;
-    string iban;
-    string codeNoeud;
-    string role;
-    string codeSpe;
+    [SerializeField]
+    string uuid;
+    [SerializeField]
+    string secu;
+    [SerializeField]
+    string mut;
+    [SerializeField]
     string civilite;
+    [SerializeField]
+    string nom;
+    [SerializeField]
+    string prenom;
+    [SerializeField]
+    string dateNaissance;
+    [SerializeField]
+    string tel;
+    [SerializeField]
+    string email;
+    [SerializeField]
+    string adresse;
 
 
 
     public string Name { get => nom; }
     public string FirstName { get => prenom; }
-    public string Uuid { get => code; }
-
-   // public enum Civilite_ {Mr = 0, Mme = 1, Autre = 2 }
-    //public Civilite_ Civilite { get => (Civilite_)civilite; }
+    public string Uuid { get => uuid; }
 
 
     public Patient(string nom, string prenom)//TEST
     {
         this.nom = nom;
         this.prenom = prenom;
-        code = UnityEngine.Random.Range(0, 999999).ToString();
+        uuid = UnityEngine.Random.Range(0, 999999).ToString();
     }
+
+
+    public enum CiviliteEnum{Mr, Mme, Autre};
+
+    public CiviliteEnum Civilite
+    {
+        get { return (CiviliteEnum)Enum.Parse(typeof(CiviliteEnum), civilite); }
+    }
+
+
 }
 
