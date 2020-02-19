@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeleteButtonScript : MonoBehaviour
+public class DeleteButtonBrouillons : MonoBehaviour
 {
-
     private Button button;
 
     // Start is called before the first frame update
@@ -18,20 +17,19 @@ public class DeleteButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.parent.parent.childCount==3)
+        /*
+        if (transform.parent.parent.parent.childCount == 3)
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
             transform.GetChild(0).gameObject.SetActive(true);
-        }
+        }*/
     }
 
     void deleteButton()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(transform.parent.parent.gameObject);
     }
-
-    
 }
