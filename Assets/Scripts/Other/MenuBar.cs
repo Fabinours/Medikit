@@ -72,22 +72,15 @@ public class MenuBar : MonoBehaviour
 
         //searchBarText.text
         DBConnection.Request("SELECT * FROM `DMP` WHERE nom LIKE \"%"+ searchBarText.text + "%\" or prenom LIKE \"%" + searchBarText.text + "%\"", UpdatePatientList_Success, UpdatePatientList_Fail);
-
-        //  DBConnection.Request(searchBarText.text);
-        // UpdatePatientList_Success(null);
     }
 
     void UpdatePatientList_Fail(string error)//TODO
     {
         Popup.Log("Menu bar error :" +error);
     }
+
         void UpdatePatientList_Success(JToken result)//TODO
     {
-        GameObject gb;
-
-
-       // Patient pp = new Patient("maya", "alx cendres");
-       // Debug.Log(JsonUtility.ToJson(pp) );
 
 
         foreach (var obj in result)
@@ -97,6 +90,7 @@ public class MenuBar : MonoBehaviour
             storedPatients[storedPatients.Count - 1]));
         }
 
+        GameObject gb;
 
 
         foreach (var p in storedPatients)

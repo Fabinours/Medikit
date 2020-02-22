@@ -34,15 +34,22 @@ public class CreateDmpScript : BaseModule
         base.OnClose();
     }
 
+    private void OnEnable()
+    {
+        byte RD() {return (byte)UnityEngine.Random.Range(0, 255); };
+
+        uuid.text = System.Convert.ToBase64String(new byte[] { RD(), RD(), RD(), RD(), RD(), RD(), RD() });
+    }
+
     public override void OnOpen()
     {
-        //uuid.text = System.Convert.ToBase64String(new byte[] {1,2,3,4 });
         base.OnOpen();
     }
 
     public void CreateDmp()
     {
         
+        //Ne sert a rien mais cest marrant
            var dmp = new JObject();
         dmp.Add("uuid", uuid.text);
         dmp.Add("secu", num_secu.text);
@@ -56,8 +63,30 @@ public class CreateDmpScript : BaseModule
         dmp.Add("adr", adresse.text);
         print(dmp);
 
+        var req = String.Format(
+            "INSERT INTO `DMP`(`uuid`, `nom`, `prenom`, `tel`, `email`, `adresse`, `dateNaissance`, `villeNaissance`, `actVille`, `secu`, `civilite`) " +
+                     "VALUES( '{0}' ,  '{1}' ,   '{2}'  , '{3}' , '{4}'  , '{5}'  ,'{6}' , '{7}'  , NULL  , '{9}'  , '{10}'  )", 
+                               uuid.text, nom.text, prenom.text, tel.text, email.text, adresse.text, dateNaissance.text, adresse.text, adresse.text, num_secu.text,  ((Patient.CiviliteEnum)civilite.value).ToString()            );
+
+        DBConnection.Request(req, OnSuccessAdd, OnFailAdd);
+
+
       //  DMP dd = JsonUtility.FromJson<DMP>(dmp.ToString());
     }
+
+    void OnFailAdd(string error)
+    {
+        Popup.Log(error);
+    }
+
+    void OnSuccessAdd(JToken result )
+    {
+        Popup.Log("DMP ajouté !");
+        Back();
+    }
+
+
+
 
 
 
