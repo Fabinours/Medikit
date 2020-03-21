@@ -52,7 +52,7 @@ public class DBConnection : MonoBehaviour
             }
             catch(Exception e)
             {
-                Debug.LogError(e);
+                Debug.LogException(e);
                 onFail("Html error:"+ result);
             }
            // onSuccess(uwr.downloadHandler.text);

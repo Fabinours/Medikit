@@ -89,7 +89,7 @@ public class MainPage : BaseModule
       
         var user = UserInfoScript.Instance.GetValues();
 
-        Popup.Log("Vous etes loggé en tant que " +user.Role.ToString()+" avec l'identifiant " + user.Id);
+        Popup.Log("Vous etes loggé en tant que " +user.Role.ToString()+" avec l'identifiant " + user.Identifier);
 
         foreach (Transform t in buttonParents)
             t.gameObject.SetActive(false);

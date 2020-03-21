@@ -69,7 +69,7 @@ public class CreateDmpScript : BaseModule
                                uuid.text, nom.text, prenom.text, tel.text, email.text, adresse.text, dateNaissance.text, adresse.text, adresse.text, num_secu.text,  ((Patient.CiviliteEnum)civilite.value).ToString()            );
 
         DBConnection.Request(req, OnSuccessAdd, OnFailAdd);
-
+        
 
       //  DMP dd = JsonUtility.FromJson<DMP>(dmp.ToString());
     }

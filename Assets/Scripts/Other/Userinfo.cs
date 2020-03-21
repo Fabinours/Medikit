@@ -37,9 +37,9 @@ using UnityEngine;
     [SerializeField]
     string codeSpe;
 
+    
 
-
-
+     
 
     //Constructeur
 
@@ -52,12 +52,15 @@ using UnityEngine;
   
     //Getters
 
-    public string Id
+    public string Identifier
     {
         get { return id; }
-    }    
-
-
+    }
+    public string Code
+    {
+        get { return code; }
+    }
+    
     public UserRole Role
     {
         get { return (UserRole)Enum.Parse(typeof(UserRole), role); }
